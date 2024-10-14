@@ -15,7 +15,7 @@ export async function addTowatchlist(formData: FormData) {
   const data = await prisma.watchList.create({
     data: {
       userId: session?.user?.email as string,
-      movieId: Number(movieId),
+      movieId: movieId as string,
     },
   });
 

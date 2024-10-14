@@ -8,7 +8,7 @@ import PlayVideoModal from "./PlayVideoModal";
 interface iAppProps {
   overview: string;
   youtubeUrl: string;
-  id: number;
+  id: string;
   age: number;
   title: string;
   releaseDate: number;

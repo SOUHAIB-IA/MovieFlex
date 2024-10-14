@@ -42,7 +42,7 @@ export default async function MovieVideo() {
           <MovieButtons
             age={data?.age as number}
             duration={data?.duration as number}
-            id={data?.id as number}
+            id={data?.id as string}
             overview={data?.overview as string}
             releaseDate={data?.release as number}
             title={data?.title as string}

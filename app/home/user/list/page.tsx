@@ -60,7 +60,7 @@ export default async function Watchlist() {
                 <MovieCard
                   key={movie.Movie?.id}
                   age={movie.Movie?.age as number}
-                  movieId={movie.Movie?.id as number}
+                  movieId={movie.Movie?.id as string}
                   overview={movie.Movie?.overview as string}
                   time={movie.Movie?.duration as number}
                   title={movie.Movie?.title as string}

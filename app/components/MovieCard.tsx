@@ -10,9 +10,9 @@ import { usePathname } from "next/navigation";
 interface iAppProps {
   title: string;
   overview: string;
-  movieId: number;
+  movieId: string;
   watchList: boolean;
-  wachtListId: string;
+  wachtListId?: string;
   youtubeUrl: string;
   year: number;
   age: number;

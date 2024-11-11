@@ -11,6 +11,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut, useSession } from "next-auth/react";
+require('dotenv').config();
+
+const IMAGE_LINK=process.env.IMAGE
 
 export default function UserNav() {
   const { data: session } = useSession();
@@ -20,7 +23,7 @@ export default function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-sm">
           <Avatar className="h-10 w-10 rounded-sm">
-            <AvatarImage src={"https://ojlpukakxfrifkkqzolz.supabase.co/storage/v1/object/public/user%20image/avatar.png"||session?.user?.image} />
+            <AvatarImage src={` ${IMAGE_LINK}/avatar.png `||session?.user?.image} />
             <AvatarFallback className="rounded-sm">
               {session?.user?.name?.charAt(0).toUpperCase() || "?"}
             </AvatarFallback>

@@ -1,12 +1,15 @@
 import { Button } from "@/components/ui/button";
 import prisma from "../utils/db";
 import axios from "axios";
+require('dotenv').config();
+
+const apiKey = process.env.API_KEY;
 
 export default function SeedDatabase() {
   async function postData() {
     "use server";
 
-    const totalPagesToFetch = 100; // Adjust this number to fetch more pages
+    const totalPagesToFetch = 200; // Adjust this number to fetch more pages
 
     try {
       for (let page = 1; page <= totalPagesToFetch; page++) {
@@ -17,7 +20,7 @@ export default function SeedDatabase() {
           params: { page: page },
           headers: {
             accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNWRkNzRlMTMyMjVkZjQ4YmZmZjZkYjU3MTc5NDg2ZCIsIm5iZiI6MTcyODM3NTkzOS40MDYwOTIsInN1YiI6IjY2Zjg1ZTgwMTQwZmJmNmExYTVmNGE4MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HCS3IpTb3Sh3ZouVmhZqCgONt-nxukh7B79DpVrm6LM',
+            Authorization: `Bearer ${apiKey}`,
           },
         };
 
@@ -28,7 +31,7 @@ export default function SeedDatabase() {
           params: { page: page },
           headers: {
             accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNWRkNzRlMTMyMjVkZjQ4YmZmZjZkYjU3MTc5NDg2ZCIsIm5iZiI6MTcyODM3NTkzOS40MDYwOTIsInN1YiI6IjY2Zjg1ZTgwMTQwZmJmNmExYTVmNGE4MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HCS3IpTb3Sh3ZouVmhZqCgONt-nxukh7B79DpVrm6LM',
+            Authorization: `Bearer ${apiKey}`,
           },
         };
 
@@ -50,7 +53,7 @@ export default function SeedDatabase() {
           const mediaDetailsResponse = await axios.get(`https://api.themoviedb.org/3/${media.type}/${media.id}`, {
             headers: {
               accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNWRkNzRlMTMyMjVkZjQ4YmZmZjZkYjU3MTc5NDg2ZCIsIm5iZiI6MTcyODM3NTkzOS40MDYwOTIsInN1YiI6IjY2Zjg1ZTgwMTQwZmJmNmExYTVmNGE4MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HCS3IpTb3Sh3ZouVmhZqCgONt-nxukh7B79DpVrm6LM',
+              Authorization: `Bearer ${apiKey}`,
             }
           });
 
@@ -60,7 +63,7 @@ export default function SeedDatabase() {
           const videoResponse = await axios.get(`https://api.themoviedb.org/3/${media.type}/${media.id}/videos`, {
             headers: {
               accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNWRkNzRlMTMyMjVkZjQ4YmZmZjZkYjU3MTc5NDg2ZCIsIm5iZiI6MTcyODM3NTkzOS40MDYwOTIsInN1YiI6IjY2Zjg1ZTgwMTQwZmJmNmExYTVmNGE4MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HCS3IpTb3Sh3ZouVmhZqCgONt-nxukh7B79DpVrm6LM',
+              Authorization: `Bearer ${apiKey}`,
             }
           });
 
@@ -83,6 +86,7 @@ export default function SeedDatabase() {
           }
 
           // Save media data to the database
+          // @ts-ignore
           await prisma.movie.create({
             data: {
               imageString: `https://image.tmdb.org/t/p/w500/${media.poster_path}`,
@@ -96,7 +100,7 @@ export default function SeedDatabase() {
                 ? new Date(media.first_air_date).getFullYear()
                 : new Date().getFullYear(), // Use first_air_date for TV shows
               videoSource: "TMDB",
-              category: category,
+              category: String(category),
               youtubeString: youtubeUrl, // Trailer YouTube URL
             },
           });

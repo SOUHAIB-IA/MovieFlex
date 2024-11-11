@@ -32,6 +32,13 @@ export function MovieCard({
 }: iAppProps) {
   const [open, setOpen] = useState(false);
   const pathName = usePathname();
+
+  function formatTime(minutes: number) {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours}h ${remainingMinutes}min`;
+  }
+  
   return (
     <>
       <button onClick={() => setOpen(true)} className="-mt-14">
@@ -65,7 +72,7 @@ export function MovieCard({
           <p className="font-normal border py-0.5 px-1 border-gray-200 rounded text-sm">
             {age}+
           </p>
-          <p className="font-normal text-sm">{time}h</p>
+          <p className="font-normal text-sm">{formatTime(time)}</p> 
         </div>
         <p className="line-clamp-1 text-sm text-gray-200 font-light">
           {overview}

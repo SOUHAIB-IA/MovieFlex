@@ -27,6 +27,12 @@ export default function PlayVideoModal({
   duration,
   release,
 }: iAppProps) {
+  
+  function formatTime(minutes: number) {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours}h ${remainingMinutes}min`;
+  }
   return (
     <Dialog open={state} onOpenChange={() => changeState(!state)}>
       <DialogContent className="sm:max-w-[425px]">
@@ -38,7 +44,7 @@ export default function PlayVideoModal({
           <div className="flex gap-x-2 items-center">
             <p>{release}</p>
             <p className="border py-o.5 px-1 border-gray-200 rounded">{age}+</p>
-            <p>{duration}h</p>
+            <p>{formatTime(duration)}</p>
           </div>
         </DialogHeader>
         <iframe src={youtubeUrl} height={250} className="w-full"></iframe>

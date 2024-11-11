@@ -4,6 +4,7 @@ import MovieButtons from "./MovieButtons";
 
 async function getData() {
   const data = await prisma.movie.findFirst({
+    where: { id: '0' },
     select: {
       title: true,
       overview: true,

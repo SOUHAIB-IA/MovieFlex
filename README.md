@@ -11,7 +11,7 @@ This repository hosts the frontend application of the Movie Recommendation Syste
 - [Usage](#usage)
 - [Folder Structure](#folder-structure)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ### Overview
 

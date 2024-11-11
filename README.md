@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Movie Recommendation System - Frontend
 
-## Getting Started
+This repository hosts the frontend application of the Movie Recommendation System. Built with Next.js, it provides a dynamic, server-rendered UI for personalized movie recommendations.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Technology Stack](#technology-stack)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This frontend application is designed to offer a personalized and user-friendly experience for discovering movies based on individual preferences. It features content-based filtering and is part of a service-oriented architecture that interacts with a Flask backend API and Supabase database.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Key Features
 
-## Learn More
+- **Dynamic Recommendations**: Personalized movie suggestions based on user interests.
+- **Efficient Browsing**: Intuitive interface with filters for genres and themes.
+- **Secure Authentication**: NextAuth integration for user login and authentication.
+- **Responsive Design**: Optimized for desktop and mobile devices.
 
-To learn more about Next.js, take a look at the following resources:
+### Technology Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend Framework**: Next.js (React-based, optimized for server-side rendering)
+- **Authentication**: NextAuth for secure multi-method user sign-in
+- **Styling**: CSS, TailwindCSS (optional, if used in the project)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Setup
 
-## Deploy on Vercel
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/frontend-movie-recommendation.git
+   cd frontend-movie-recommendation
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. **Create a `.env.local` file**:
+   Populate it with the required environment variables, such as:
+
+   ```plaintext
+   NEXTAUTH_SECRET=your_nextauth_secret
+   NEXTAUTH_URL=http://localhost:3000
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+
+4. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+
+### Usage
+
+1. **Sign In**:
+   Users can log in using Google, GitHub, or email.
+   
+2. **Browse Movies**:
+   Explore movie recommendations on the homepage, which dynamically updates based on user preferences.
+   
+3. **Search and Filter**:
+   Browse through genres or themes to find content tailored to user tastes.
+
+### Folder Structure
+
+- `pages/`: Contains all the main pages and API routes.
+- `components/`: Reusable UI components such as movie cards, navigation bars, etc.
+- `utils/`: Utility functions, such as API calls.
+- `styles/`: CSS files for global and component-specific styling.
+
+### Contributing
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Open a pull request once you’re ready for review.

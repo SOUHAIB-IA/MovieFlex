@@ -9,7 +9,7 @@ export default function SeedDatabase() {
   async function postData() {
     "use server";
 
-    const totalPagesToFetch = 200; // Adjust this number to fetch more pages
+    const totalPagesToFetch = 200;
 
     try {
       for (let page = 1; page <= totalPagesToFetch; page++) {
@@ -47,7 +47,7 @@ export default function SeedDatabase() {
           ...tvShows.map((tvShow: any) => ({ ...tvShow, type: "tv" }))
         ];
 
-        // Loop through the combined list and save to the database
+        
         for (const media of allMedia) {
           // Fetch detailed data to get the runtime or episode count
           const mediaDetailsResponse = await axios.get(`https://api.themoviedb.org/3/${media.type}/${media.id}`, {
@@ -67,7 +67,7 @@ export default function SeedDatabase() {
             }
           });
 
-          // Filter to find the trailer (usually type: 'Trailer')
+          
           const trailer = videoResponse.data.results.find(
             (video: { type: string; site: string }) => video.type === 'Trailer' && video.site === 'YouTube'
           );
@@ -75,33 +75,33 @@ export default function SeedDatabase() {
           // Construct the YouTube URL (if trailer exists)
           const youtubeUrl = trailer ? `https://www.youtube.com/embed/${trailer.key}` : "";
 
-          // Randomly select between 'movie', 'show', and 'recent' for the category
+          
           const categories = ["movie", "show", "recent"];
           let category;
           
           if (media.type === "movie") {
-            category = Math.random() < 0.5 ? "movie" : "recent"; // 50% chance for "recent"
+            category = Math.random() < 0.5 ? "movie" : "recent"; 
           } else if (media.type === "tv") {
-            category = Math.random() < 0.5 ? "show" : "recent";  // 50% chance for "recent"
+            category = Math.random() < 0.5 ? "show" : "recent"; 
           }
 
-          // Save media data to the database
+          
           // @ts-ignore
           await prisma.movie.create({
             data: {
               imageString: `https://image.tmdb.org/t/p/w500/${media.poster_path}`,
-              title: media.title || media.name, // TV shows use 'name' instead of 'title'
-              age: media.adult ? 18 : 13, // assuming age 18 for adult content
-              duration: mediaDetails.runtime || mediaDetails.episode_run_time?.[0] || 60, // Use runtime for movies or average episode runtime for TV shows
+              title: media.title || media.name, 
+              age: media.adult ? 18 : 13,
+              duration: mediaDetails.runtime || mediaDetails.episode_run_time?.[0] || 60,
               overview: media.overview,
               release: media.release_date
                 ? new Date(media.release_date).getFullYear()
                 : media.first_air_date
                 ? new Date(media.first_air_date).getFullYear()
-                : new Date().getFullYear(), // Use first_air_date for TV shows
+                : new Date().getFullYear(), 
               videoSource: "TMDB",
               category: String(category),
-              youtubeString: youtubeUrl, // Trailer YouTube URL
+              youtubeString: youtubeUrl, 
             },
           });
         }

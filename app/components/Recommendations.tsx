@@ -6,11 +6,11 @@ import { authOptions } from "../utils/auth";
 import prisma from "../utils/db";
 require('dotenv').config();
 
-// TMDB API Token and Base URL
+
 const TMDB_API_TOKEN = process.env.API_KEY;
 const TMDB_API_BASE_URL = process.env.TMDB_API_BASE_URL;
 const MODEL_LINK= process.env.MODEL_LINK
-// Fetch movies from the user's watchlist in Prisma
+
 async function getWatchlistMovies(userId: string) {
   const watchlistMovies = await prisma.watchList.findMany({
     where: { userId },
@@ -18,17 +18,17 @@ async function getWatchlistMovies(userId: string) {
       Movie: { select: { title: true } },
     },
   });
-  return watchlistMovies.map((item) => item.Movie?.title ?? ""); // Ensure movie title exists
+  return watchlistMovies.map((item) => item.Movie?.title ?? ""); 
 }
 
-// Fetch movie details from the database
+
 async function getMoviesFromDatabase(titles: string[]) {
   return prisma.movie.findMany({
     where: { title: { in: titles } },
   });
 }
 
-// Fetch movie details from TMDB if not found in the database
+
 async function getMovieFromTMDB(title: string) {
   try {
     const response = await axios.get(`${TMDB_API_BASE_URL}/search/movie`, {
@@ -36,18 +36,18 @@ async function getMovieFromTMDB(title: string) {
       params: { query: title },
     });
 
-    return response.data.results[0]; // Return the first search result
+    return response.data.results[0]; 
   } catch (error) {
     console.error(`Error fetching movie from TMDB: ${title}`, error);
     return null;
   }
 }
 
-// Fetch recommended movies from both the database and TMDB
+
 async function getRecommendedMovies(movieTitles: string[][]) {
   const recommendedMovieNames: string[] = [];
 
-  // Send movie titles to your recommendation API
+  
   for (const titles of movieTitles) {
     try {
       const response = await axios.post(`${MODEL_LINK}/recommend`, { title: titles });
@@ -57,18 +57,18 @@ async function getRecommendedMovies(movieTitles: string[][]) {
     }
   }
 
-  // Fetch existing movies from the database
+
   const moviesFromDB = await getMoviesFromDatabase(recommendedMovieNames);
   const foundTitles = moviesFromDB.map((movie) => movie.title);
 
   // Find missing titles that need to be fetched from TMDB
   const missingTitles = recommendedMovieNames.filter((title) => !foundTitles.includes(title));
 
-  // Fetch missing movies from TMDB
+
   const tmdbMoviesPromises = missingTitles.map((title) => getMovieFromTMDB(title));
   const tmdbMovies = (await Promise.all(tmdbMoviesPromises)).filter(Boolean); // Filter out null results
 
-  // Combine database and TMDB results
+
   return [...moviesFromDB, ...tmdbMovies];
 }
 
@@ -77,7 +77,7 @@ export default async function Recommendations() {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.email as string;
 
-  // Fetch watchlist movie titles
+  
   const watchlistMovieTitles = await getWatchlistMovies(userId);
 
   // Fetch recommended movies

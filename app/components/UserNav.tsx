@@ -18,6 +18,7 @@ const IMAGE_LINK=process.env.IMAGE
 export default function UserNav() {
   const { data: session } = useSession();
 
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
